@@ -1,0 +1,3 @@
+Les informations que le programme va venir chercher dans ce fichier !!
+
+Elles seront copié dans le second.
