@@ -15,18 +15,24 @@ public class Fenetre extends JFrame {
 	public static void main(String[] args) {
 		new Fenetre();
 	}
+	
 	private JPanel container = new JPanel();
 	private JPanel containeButton = new JPanel();
 	private Panneau pan = new Panneau();
-	private MyButton meButton = new MyButton("mon button");
-	private JButton button = new JButton("2But");
+	private MyButton go = new MyButton("Go");
+	private JButton stop = new JButton("Stop");
 	private JLabel label = new JLabel("Litle label");
-	private int compteur = 0;
+	
+	private Boolean animated = true;
+	private Boolean backX = false, backY = false;
+	private int x = pan.getPosX(), y = pan.getPosY();
+	
 	public Fenetre() {
 		this.setTitle("Animation");
 		this.setSize(300, 300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
+		this.setAlwaysOnTop(true);
 		container.setLayout(new BorderLayout());
 		
 		Font police = new Font("AR CENA", Font.BOLD, 16);
@@ -35,11 +41,12 @@ public class Fenetre extends JFrame {
 		label.setForeground(Color.BLUE);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		
-		meButton.addActionListener(new listenerMeButton());
-		button.addActionListener(new  listenerButton());
+		go.addActionListener(new listenerGo());
+		go.setEnabled(false);
+		stop.addActionListener(new  listenerStop());
 		
-		containeButton.add(this.meButton);
-		containeButton.add(this.button);
+		containeButton.add(this.go);
+		containeButton.add(this.stop);
 		
 		container.add(this.containeButton, BorderLayout.SOUTH);
 		container.add(label, BorderLayout.NORTH);
@@ -52,31 +59,36 @@ public class Fenetre extends JFrame {
 
 		go();
 	}
-	class listenerMeButton implements ActionListener{
+	public class listenerMeButton implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 //			label.setText("Nb de click : " + ++this.compteur);
 			label.setText("Vous avez sur le boutton 1");
 		}
 	}
-	class listenerButton implements ActionListener{
-		@Override
+	public class listenerGo implements ActionListener{
+
 		public void actionPerformed(ActionEvent arg0) {
-//			label.setText("Nb de click : " + ++this.compteur);
-			label.setText("Vous avez sur le boutton 2");
+			animated = true;
+			go.setEnabled(false);
+			stop.setEnabled(true);
+			go();
+		}
+	}
+	
+	class listenerStop implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			animated = false;
+			go.setEnabled(true);
+			stop.setEnabled(false);
 		}
 	}
 	private void go() {
-		// Les coordonnées de départ de notre rond
-		int x = pan.getPosX(), y = pan.getPosY();
-		// Le booléen pour savoir si l'on recule ou non sur l'axe x
-		boolean backX = false;
-		// Le booléen pour savoir si l'on recule ou non sur l'axe y
-		boolean backY = false;
+		
 
 		// Dans cet exemple, j'utilise une boucle while
 		// Vous verrez qu'elle fonctionne très bien
-		while (true) {
+		while (animated) {
 			// Si la coordonnée x est inférieure à 1, on avance
 			if (x < 1)
 				backX = false;
