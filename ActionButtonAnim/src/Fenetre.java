@@ -21,7 +21,7 @@ public class Fenetre extends JFrame {
 	private Panneau pan = new Panneau();
 	private MyButton go = new MyButton("Go");
 	private JButton stop = new JButton("Stop");
-	private JLabel label = new JLabel("Litle label");
+	private JLabel label = new JLabel("My Game");
 	
 	private Boolean animated = true;
 	private Boolean backX = false, backY = false;
