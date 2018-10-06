@@ -7,7 +7,7 @@ package show;
 public class Main{
 
 	public void main (String[] Args) {
-		
+		Calculatrice alpha = New Calculatrice();
 	}
 
 }
