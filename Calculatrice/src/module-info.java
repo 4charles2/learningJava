@@ -1,0 +1,6 @@
+/**
+ * @author charly
+ *
+ */
+module Calculatrice {
+}
