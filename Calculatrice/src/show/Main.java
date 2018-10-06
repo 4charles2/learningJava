@@ -7,6 +7,6 @@ package show;
 public class Main{
 
 	public void main (String[] Args) {
-		Calcul alpha = New Calcul();
+		Calcul alpha = new Calcul();
 	}
 }
