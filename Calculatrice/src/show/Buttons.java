@@ -6,7 +6,7 @@ public class Buttons extends JButton {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public Buttons() {
-		
+	public Buttons(String str) {
+		super(str);
 	}
 }

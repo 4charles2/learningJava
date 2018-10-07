@@ -1,4 +1,3 @@
-package show;
 
 
 import matrix.Dashboard;
@@ -8,7 +7,7 @@ import matrix.Dashboard;
 **/
 
 public class Main{
-	public static void main (String[] Args) {
+	public void main (String[] Args) {
 		Dashboard alpha = new Dashboard();
 	}
 }

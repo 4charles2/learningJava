@@ -12,6 +12,8 @@ public class Fenetre extends JFrame {
 	 * 
 	 * Peut être modifier via les méthode de classe 
 	 * 
+	 * setResizable et a false
+	 * 
 	 * @param pTitle
 	 * @param pWidth
 	 * @param pHeight
@@ -22,7 +24,7 @@ public class Fenetre extends JFrame {
 		locationRelativeTo();
 		defaultCloseOperation();
 		alwaysOnTop(true);
-		
+		resizable(false);
 		visible(true);
 		
 	}
@@ -31,6 +33,9 @@ public class Fenetre extends JFrame {
 	}
 	public void size(int pWidth,int pHeight) {
 		this.setSize(pWidth, pHeight);
+	}
+	public void resizable(boolean b){
+		this.setResizable(b);
 	}
 	public void locationRelativeTo(java.awt.Component b) {
 		this.setLocationRelativeTo(b);
