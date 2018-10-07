@@ -1,5 +1,7 @@
 package show;
 
+import matrix.Dashboard;
+
 /**
 * @author charles
 **/
@@ -7,6 +9,6 @@ package show;
 public class Main{
 
 	public void main (String[] Args) {
-		Calcul alpha = new Calcul();
+		Dashboard alpha = new Dashboard();
 	}
 }
