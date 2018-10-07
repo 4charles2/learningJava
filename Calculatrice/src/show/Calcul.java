@@ -1,6 +1,8 @@
 package show;
 
-public class Calcul {
+import javax.swing.JPanel;
+
+public class Calcul extends JPanel {
 
 	public Calcul() {
 		
