@@ -21,7 +21,7 @@ public class Buttons extends JButton {
 	 * @param nb
 	 */
 	public void ListButtons(int nb) {
-		for(int i = 0; i < nb; i++)
+		for(int i = nb; i >= 0; i--)
 			lButtons.add(new Buttons(Integer.toString(i)));
 	}
 	public void ListButtons(String str) {
