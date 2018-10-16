@@ -10,5 +10,6 @@ import matrix.Dashboard;
 public class Main{
 	public static void main (String[] Args) {
 		Dashboard alpha = new Dashboard();
+		System.out.println("fin de programe");
 	}
 }

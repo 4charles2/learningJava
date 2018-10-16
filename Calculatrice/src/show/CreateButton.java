@@ -5,15 +5,17 @@ import java.util.List;
 
 import javax.swing.JButton;
 
-public class Buttons extends JButton {
+public class CreateButton extends JButton {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public List<Buttons> lButtons = new LinkedList<Buttons>();
+	public List<CreateButton> lButtons = new LinkedList<CreateButton>();
 	
-	public Buttons() {};
+	public CreateButton() {
+		super();
+	}
 	
-	public Buttons(String str) {
+	public CreateButton(String str) {
 		super(str);
 	}
 	/**
@@ -22,9 +24,9 @@ public class Buttons extends JButton {
 	 */
 	public void ListButtons(int nb) {
 		for(int i = nb; i >= 0; i--)
-			lButtons.add(new Buttons(Integer.toString(i)));
+			lButtons.add(new CreateButton(Integer.toString(i)));
 	}
 	public void ListButtons(String str) {
-		lButtons.add(new Buttons(str));
+		lButtons.add(new CreateButton(str));
 	}
 }

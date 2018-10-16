@@ -1,71 +1,92 @@
 package matrix;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
 import show.Background;
-import show.Buttons;
+import show.CreateButton;
 import show.Fenetre;
 import show.PanelStaple;
 
 public class Dashboard{
-	
-	
-	private JPanel stapleButtons = new JPanel();
-	
+	PanelStaple LCDScreen = new PanelStaple();
+	Background back = new Background();
 	
 	public Dashboard() {
-		Fenetre show = new Fenetre("Maticalc", 500, 600);
-		PanelStaple LCDScreen = new PanelStaple();
-		Background back = new Background();
 		
+		Fenetre show = new Fenetre("Maticalc", 500, 600);
+		
+		JPanel container = new JPanel();
 		LCDScreen.setPreferredSize(new Dimension(500, 100));
 		
-		this.opButtons();
+		showButtons();
+		showScreen();
 		
-		back.add(stapleButtons);
-			
-		show.setLayout(new BorderLayout());
-		show.getContentPane().add(LCDScreen, BorderLayout.NORTH);
-		show.getContentPane().add(back, BorderLayout.CENTER);
+		container.setLayout(new BorderLayout());
+		
+		container.add(LCDScreen, BorderLayout.NORTH);
+		container.add(back, BorderLayout.CENTER);
+		
+		show.setContentPane(container);
+		show.validate();
+	}
+	private void showScreen() {
 		
 	}
-	private void opButtons() {
+	private void showButtons() {
+		JPanel containNumber = new JPanel();
+		JPanel stapleButtons = new JPanel();
 		JPanel numberButton = new JPanel();
 		JPanel operatorButton = new JPanel();
+		JPanel lastLigneNumber = new JPanel();
 		
-		Buttons ListButtons = new Buttons();
-		GridLayout gl = new GridLayout(3,4);
-		GridLayout glOp = new GridLayout(1, 5);
+		CreateButton ListButtons = new CreateButton();
+		containNumber.setLayout(new BorderLayout());
+		GridLayout gl = new GridLayout(3,3);
+		GridLayout glOp = new GridLayout(4, 1);
 		
 		stapleButtons.setOpaque(false);
+		containNumber.setOpaque(false);
 		numberButton.setOpaque(false);
 		operatorButton.setOpaque(false);
+		lastLigneNumber.setOpaque(false);
 		
-		glOp.setHgap(5);
-		glOp.setVgap(5);
-		gl.setHgap(5);
-		gl.setVgap(5);
+		glOp.setHgap(10);
+		glOp.setVgap(10);
+		gl.setHgap(10);
+		gl.setVgap(10);
 		
-		
-		stapleButtons.setLayout(gl);
-	
+		numberButton.setLayout(gl);
+		operatorButton.setLayout(glOp);
 		
 		ListButtons.ListButtons(9);
+		ListButtons.ListButtons("/");
+		ListButtons.ListButtons("-");
+		ListButtons.ListButtons("+");
 		ListButtons.ListButtons(".");
 		ListButtons.ListButtons("=");
 		
 		ListButtons.lButtons.forEach((temp)->{
-				temp.setPreferredSize(new Dimension(100, 80));
+			temp.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			temp.setPreferredSize(new Dimension(100, 80));
+			if(temp.getText().matches("[1-9]"))
 				numberButton.add(temp);
+			else if( temp.getText() == "=") {
+				temp.setPreferredSize(new Dimension(210, 80));
+				lastLigneNumber.add(temp);	
+			}else if(temp.getText().equals("0")) {
+				lastLigneNumber.add(temp);	
+			}else
+				operatorButton.add(temp);
 		});
-		
-		
-		
+		containNumber.add(numberButton, BorderLayout.CENTER);
+		containNumber.add(lastLigneNumber, BorderLayout.SOUTH);
+		stapleButtons.add(containNumber);
+		stapleButtons.add(operatorButton);
+		back.add(stapleButtons);
 	}
 }
