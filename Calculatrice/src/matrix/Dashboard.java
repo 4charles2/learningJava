@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentListener;
-import java.io.IOException;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -150,8 +148,7 @@ public class Dashboard{
 	}
 	class operatorInput implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
-			if (calcul)
-				calculNumber(operator);
+			
 			
 			calcul = true;
 			nb1 = (nb1 == "") ? "0" : nb1;
@@ -162,6 +159,9 @@ public class Dashboard{
 	}
 	class resultInput implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
+			if (calcul)
+				calculNumber(operator);
+			
 			showLCD.setText(BEGIN_TEXT+result+AFTER_TEXT);
 			calcul = false;
 		}
