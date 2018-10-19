@@ -5,9 +5,14 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentListener;
+import java.io.IOException;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +29,12 @@ public class Dashboard{
 	
 	PanelStaple LCDScreen = new PanelStaple();
 	Background back = new Background();
+	JLabel showLCD = new JLabel(BEGIN_TEXT+"0"+AFTER_TEXT);
+	
+	private boolean calcul = false;
+	private String nb1 = "";
+	private String result = "";
+	private String operator = "";
 	
 	public Dashboard() {
 	
@@ -37,7 +48,6 @@ public class Dashboard{
 		showScreen();
 		
 		container.setLayout(new BorderLayout());
-		
 		container.add(LCDScreen, BorderLayout.NORTH);
 		container.add(back, BorderLayout.CENTER);
 		
@@ -46,14 +56,12 @@ public class Dashboard{
 	}
 	private void showScreen() {
 		LCDScreen.setLayout(null);
-		
-		JLabel showLCD = new JLabel(BEGIN_TEXT+"0"+AFTER_TEXT);
+
 		showLCD.setBounds(0, 0, 490, 100);
 		showLCD.setVerticalAlignment(SwingConstants.CENTER);
 		showLCD.setHorizontalAlignment(SwingConstants.RIGHT);
 		showLCD.setBackground(Color.darkGray);
 		LCDScreen.add(showLCD);
-
 	}
 	private void showButtons() {
 		JPanel containNumber = new JPanel();
@@ -65,14 +73,13 @@ public class Dashboard{
 		CreateButton ListButtons = new CreateButton();
 		containNumber.setLayout(new BorderLayout());
 		GridLayout gl = new GridLayout(3,3);
-		GridLayout glOp = new GridLayout(4, 1);
+		GridLayout glOp = new GridLayout(5, 1);
 		
 		stapleButtons.setOpaque(false);
 		containNumber.setOpaque(false);
 		numberButton.setOpaque(false);
 		operatorButton.setOpaque(false);
 		lastLigneNumber.setOpaque(false);
-		
 		
 		glOp.setHgap(10);
 		glOp.setVgap(10);
@@ -84,6 +91,7 @@ public class Dashboard{
 		
 		ListButtons.ListButtons(9);
 		ListButtons.ListButtons("/");
+		ListButtons.ListButtons("*");
 		ListButtons.ListButtons("-");
 		ListButtons.ListButtons("+");
 		ListButtons.ListButtons(".");
@@ -91,28 +99,79 @@ public class Dashboard{
 		
 		ListButtons.lButtons.forEach((temp)->{
 			temp.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			temp.setPreferredSize(new Dimension(100, 80));
-			if(temp.getText().matches("[1-9]"))
+			
+			if(temp.getText().matches("[1-9]")) {
+				temp.setPreferredSize(new Dimension(100, 80));
+				temp.addActionListener(new numberInput());
 				numberButton.add(temp);
-			else if( temp.getText() == "=") {
-			temp.setPreferredSize(new Dimension(210, 80));
+			}else if( temp.getText() == "=") {
+				temp.setPreferredSize(new Dimension(210, 80));
+				temp.addActionListener(new resultInput());
 				lastLigneNumber.add(temp);	
 			}else if(temp.getText().equals("0")) {
-				lastLigneNumber.add(temp);	
-			}else
+				temp.setPreferredSize(new Dimension(100, 80));
+				temp.addActionListener(new numberInput());
+				lastLigneNumber.add(temp);
+			}else {
+				temp.setPreferredSize(new Dimension(80, 60));
+				temp.addActionListener(new operatorInput());
 				operatorButton.add(temp);
+			}
 		});
+		
+		JButton resetButton = new JButton("C");
+		resetButton.addActionListener(new resetInput());
+		resetButton.setPreferredSize(new Dimension(420, 80));
+		
 		containNumber.add(numberButton, BorderLayout.CENTER);
 		containNumber.add(lastLigneNumber, BorderLayout.SOUTH);
+		
 		stapleButtons.add(containNumber);
 		stapleButtons.add(operatorButton);
-		JButton resetButton = new JButton("C");
-		resetButton.setPreferredSize(new Dimension(420, 80));
+		
 		back.add(resetButton);
 		back.add(stapleButtons);
 	}
-	
-	public class numberInput implements ActionListener{
-		
+	private void calculNumber(String operator) {
+		try {
+			ScriptEngineManager manager = new ScriptEngineManager();
+			ScriptEngine engine = manager.getEngineByName("js");
+			result = engine.eval(nb1 + operator + result).toString();
+			}catch(ScriptException e) {
+				e.printStackTrace();
+			}
+	}
+	class numberInput implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			
+			nb1 += arg0.getActionCommand();
+			showLCD.setText(BEGIN_TEXT+nb1+AFTER_TEXT);
+		}
+	}
+	class operatorInput implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			if (calcul)
+				calculNumber(operator);
+			
+			calcul = true;
+			nb1 = (nb1 == "") ? "0" : nb1;
+			result = (result == "") ? nb1 : result;
+			operator = arg0.getActionCommand();
+			nb1 = "";
+		}
+	}
+	class resultInput implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			showLCD.setText(BEGIN_TEXT+result+AFTER_TEXT);
+			calcul = false;
+		}
+	}
+	class resetInput implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			showLCD.setText(BEGIN_TEXT+"0"+AFTER_TEXT);
+			nb1 = "";
+			result = "";
+			calcul = false;
+		}		
 	}
 }
