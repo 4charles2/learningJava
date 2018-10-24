@@ -12,6 +12,11 @@ import javax.swing.JPanel;
 
 public class Fenetre extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static void main(String[] args) {
 		new Fenetre();
 	}
@@ -26,6 +31,8 @@ public class Fenetre extends JFrame {
 	private Boolean animated = true;
 	private Boolean backX = false, backY = false;
 	private int x = pan.getPosX(), y = pan.getPosY();
+	
+	 private Thread t;
 	
 	public Fenetre() {
 		this.setTitle("Animation");
@@ -125,4 +132,26 @@ public class Fenetre extends JFrame {
 			}
 		}
 	}
+	public class BoutonListener implements ActionListener{
+	    public void actionPerformed(ActionEvent arg0) {
+	      animated = true;
+	      t = new Thread(new PlayAnimation());
+	      t.start();
+	      go.setEnabled(false);
+	      stop.setEnabled(true);
+	    }
+	  }
+
+	  class Bouton2Listener  implements ActionListener{
+	    public void actionPerformed(ActionEvent e) {
+	      animated = false;       
+	      go.setEnabled(true);
+	      stop.setEnabled(false);
+	    }
+	  }
+	  class PlayAnimation implements Runnable{
+		    public void run() {
+		      go();                   
+		    }               
+		  }      
 }

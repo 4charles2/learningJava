@@ -11,7 +11,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-public class MyButton extends JButton implements MouseListener{
+public class MyButton extends JButton {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nom;
 	private Image img;
 	public MyButton(String text) {
@@ -22,7 +26,7 @@ public class MyButton extends JButton implements MouseListener{
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-		this.addMouseListener(this);
+		
 	}
 	public void paintComponent(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
@@ -33,7 +37,7 @@ public class MyButton extends JButton implements MouseListener{
 		g.setColor(Color.BLACK);
 		g.drawString(this.nom, this.getWidth() / 2 - (this.getWidth()/ 2 /4), (this.getHeight() / 2) + 5);
 	}
-	@Override
+	/*@Override
 	public void mouseClicked(MouseEvent arg0) {
 		
 	}
@@ -79,5 +83,6 @@ public class MyButton extends JButton implements MouseListener{
 				e.printStackTrace();
 			}			
 		}
-	}
+	}*/
+	
 }
