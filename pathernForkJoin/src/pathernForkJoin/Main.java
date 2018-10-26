@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 public class Main {
 
 	public static void main(String[] args) {
-		Path chemin = Paths.get("C://Users/PC/Creative Cloud Files");
+		Path chemin = Paths.get("C://Users/PC/Desktop");
 		String filtre = "*.psd";
 		FolderScanner fs = new FolderScanner(chemin, filtre);
 		
